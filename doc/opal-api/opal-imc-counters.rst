@@ -4,7 +4,7 @@ OPAL_IMC_COUNTERS_INIT
 ==============================
 OPAL call interface to initialize In-memory collection
 infrastructure. Call does multiple scom writes on each
-incavation for Core IMC initialization. And for the
+invocation for Core/Trace IMC initialization. And for the
 Nest IMC, at this point, call is a no-op and returns
 OPAL_SUCCESS. Incase of kexec, OS driver should first
 stop the engine via OPAL_IMC_COUNTER_STOP(and then
@@ -15,10 +15,13 @@ the engine via OPAL_IMC_COUNTER_STOP.
 OPAL does sanity checks to detect unknown or
 unsupported IMC device type and nest units.
 check_imc_device_type() function removes
-unsupported IMC device type. disable_unavailable_units()
-removes unsupported nest units by the microcode.
-This way OPAL can lock down and advertise only
-supported device type and nest units.
+unsupported IMC device type, and in case of
+trace-node it ensures that the node is added
+only for Nimbus DD2.2 and later chip versions.
+disable_unavailable_units() removes unsupported
+nest units by the microcode. This way OPAL can
+lock down and advertise only supported device
+type and nest units.
 
 Parameters
 ----------
@@ -43,7 +46,7 @@ OPAL_SUCCESS   - On succesfully initialized or even if init operation is a no-op
 OPAL_IMC_COUNTERS_START
 ============================
 OPAL call interface for starting the In-Memory Collection
-counters for a specified domain (NEST/CORE).
+counters for a specified domain (NEST/CORE/TRACE).
 
 Parameters
 ----------
@@ -65,7 +68,7 @@ OPAL_SUCCESS   - On successful execution of the operation for the given ``type``
 OPAL_IMC_COUNTERS_STOP
 ===========================
 OPAL call interface for stoping In-Memory
-Collection counters for a specified domain (NEST/CORE).
+Collection counters for a specified domain (NEST/CORE/TRACE).
 STOP should always be called after a related START.
 While STOP *may* run successfully without an associated
 START call, this is not gaurenteed.
