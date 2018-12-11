@@ -44,6 +44,17 @@ sampling duration) fetches the counter data and accumulate to main memory.
 Memory to accumulate counter data are refered from "PDBAR" (per-core scom)
 and "LDBAR" per-thread spr.
 
+Trace mode of IMC:
+------------------
+
+POWER9 support two modes for IMC which are the Accumulation mode and
+Trace mode. In Accumulation mode, event counts are accumulated in system
+Memory. Hypervisor then reads the posted counts periodically or when
+requested. In IMC Trace mode, event counted is fixed for cycles and on
+each overflow, hardware snapshots the program counter along with other
+details and writes into memory pointed by LDBAR. LDBAR has bits to
+indicate the IMC trace-mode.
+
 OPAL APIs:
 ----------
 
